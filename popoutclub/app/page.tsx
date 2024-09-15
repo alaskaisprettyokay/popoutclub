@@ -1,8 +1,103 @@
+'use client';
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawEnneagram(); // Redraw when resized
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawEnneagram() {
+      const width = canvas.width;
+      const height = canvas.height;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const radius = Math.min(width, height) * 0.4; // Adjust radius based on screen size
+
+      // Enneagram points based on angles
+      const points = [];
+      const numPoints = 9;
+      const offsetAngle = Math.PI / 2 - 2 * Math.PI / 9; // Rotate the shape to start at the top
+
+      //Colors
+      const colors = ['#24116A', '#734DFF', '#FF45C5', '#FAC502', '#000000'];
+      const gradient = ctx.createLinearGradient(0, 0, width, height);
+
+      
+
+      // Calculate coordinates
+      for (let i = 0; i < numPoints; i++) {
+        const angle = (2 * Math.PI * i) / numPoints - offsetAngle;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        points.push({ x, y });
+      }
+
+      // Enneagram connection pattern
+      const triangleConnections = [[2, 5], [5, 8], [8, 2]];
+      const hexagramConnections = [[0, 3], [3, 1], [1, 7], [7, 4], [4, 6], [6, 0]];
+
+      //Add color stops with lerp
+      colors.forEach((color, index) => {
+        const stop = index / (colors.length - 1);
+        gradient.addColorStop(stop, color);
+      });
+
+
+      // Set stroke properties
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 2;
+
+      // Draw triangle (3-6-9)
+      triangleConnections.forEach(connection => {
+        ctx.beginPath();
+        ctx.moveTo(points[connection[0]].x, points[connection[0]].y);
+        ctx.lineTo(points[connection[1]].x, points[connection[1]].y);
+        ctx.stroke();
+      });
+
+      // Draw hexagram
+      hexagramConnections.forEach(connection => {
+        ctx.beginPath();
+        ctx.moveTo(points[connection[0]].x, points[connection[0]].y);
+        ctx.lineTo(points[connection[1]].x, points[connection[1]].y);
+        ctx.stroke();
+      });
+    }
+
+    drawEnneagram();
+
+    // Animation function
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawEnneagram();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, []);
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <>
+    <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] relative z-10">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
@@ -96,6 +191,8 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
+
     </div>
+    </>
   );
 }
