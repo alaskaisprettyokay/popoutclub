@@ -21,6 +21,7 @@ export default function Home() {
     window.addEventListener('resize', resizeCanvas);
 
     function drawEnneagram() {
+      if (!canvas) return;
       const width = canvas.width;
       const height = canvas.height;
       const centerX = width / 2;
@@ -28,12 +29,13 @@ export default function Home() {
       const radius = Math.min(width, height) * 0.4; // Adjust radius based on screen size
 
       // Enneagram points based on angles
-      const points = [];
+      const points: { x: number; y: number }[] = [];
       const numPoints = 9;
       const offsetAngle = Math.PI / 2 - 2 * Math.PI / 9; // Rotate the shape to start at the top
 
       //Colors
       const colors = ['#24116A', '#734DFF', '#FF45C5', '#FAC502', '#000000'];
+      if (!ctx) return;
       const gradient = ctx.createLinearGradient(0, 0, width, height);
 
       
@@ -82,8 +84,11 @@ export default function Home() {
 
     // Animation function
     function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawEnneagram();
+      if (ctx && canvas) {
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawEnneagram();
+      }
       requestAnimationFrame(animate);
     }
 
