@@ -117,7 +117,7 @@ export default function Home() {
     <>
     <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] relative z-10">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start  max-w-[70%] mx-auto">
+      <main className="flex flex-col gap-8 row-start-2 items-center max-w-[70%] mx-auto">
         <Marquee gradient={false} speed={30} direction="right">
           <p className="inline-block text-sm font-[family-name:var(--font-geist-mono)] marquee-text">
             awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • 
@@ -132,14 +132,25 @@ export default function Home() {
           </Marquee>
         </div>
 
-        <a
-            href="https://t.me/+8TQIw8GyLDA0OGVh"
+        <div className="flex justify-center gap-4">
+          <a
+            href="https://agartha1.substack.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${azeretMono.className} text-sm text-[#A3A3A3] px-6 py-3 hover:text-[#FAC502] transition-colors duration-300 mt-8 underline text-center block mx-auto`}
+            className={`${azeretMono.className} text-sm text-[#FF4C96] px-6 py-3 hover:text-[#FAC502] transition-colors duration-300 underline`}
           >
-            membership inquiry
+            subscribe
           </a>
+
+          <a
+            href="https://x.com/agartha_one"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${azeretMono.className} text-sm text-[#FF4C96] px-6 py-3 hover:text-[#FAC502] transition-colors duration-300 underline`}
+          >
+            follow X
+          </a>
+        </div>
         
       </main>
 
