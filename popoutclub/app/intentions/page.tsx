@@ -1,10 +1,13 @@
 'use client';
+import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import { auth, db, storage } from '../firebaseConfig';
-import { doc, getDoc, setDoc, collection, addDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, addDoc } from 'firebase/firestore';
 import { ref, uploadString } from 'firebase/storage';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+// Dynamically import ReactQuill with no SSR
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const IntentionsPage: React.FC = () => {
   const [userName, setUserName] = useState<string | null>(null);
