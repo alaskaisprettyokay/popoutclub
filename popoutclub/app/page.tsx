@@ -143,7 +143,7 @@ export default function Home() {
           </a>
 
           <a
-            href="https://x.com/agartha_one"
+            href="https://x.com/popoutclub"
             target="_blank"
             rel="noopener noreferrer"
             className={`${azeretMono.className} text-sm text-[#FF4C96] px-6 py-3 hover:text-[#FAC502] transition-colors duration-300 underline`}
