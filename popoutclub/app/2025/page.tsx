@@ -1,25 +1,19 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { auth, googleProvider, db } from '../firebaseConfig';
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithPopup, User } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import Marquee from 'react-fast-marquee';
-import { Bayon, Azeret_Mono } from 'next/font/google';
+import { Bayon } from 'next/font/google';
 
 const bayon = Bayon({
   weight: '400',
   subsets: ['latin'],
 });
 
-const azeretMono = Azeret_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-azeret-mono',
-});
-
 export default function Page2025() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [name, setName] = useState('');
   const [invitedBy, setInvitedBy] = useState('');
   const [membershipTier, setMembershipTier] = useState('');
@@ -46,7 +40,7 @@ export default function Page2025() {
     e.preventDefault();
     if (user) {
       try {
-        const userDoc = doc(db, 'users', user.uid || user); // Use user.uid for Google, user for Web3
+        const userDoc = doc(db, 'users', user.uid);
         await setDoc(userDoc, {
           name,
           invitedBy,
@@ -69,6 +63,14 @@ export default function Page2025() {
       alert('Please log in first.');
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Code that accesses `document` or other browser-specific APIs
+      // For example:
+      // const element = document.getElementById('some-id');
+    }
+  }, []);
 
   return (
     <>
