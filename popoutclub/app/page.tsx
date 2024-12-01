@@ -1,7 +1,8 @@
 'use client';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bayon, Azeret_Mono } from 'next/font/google';
 import Marquee from 'react-fast-marquee'
+import { useRouter } from 'next/navigation';
 
 const bayon = Bayon({
   weight: '400',
@@ -14,8 +15,10 @@ const azeretMono = Azeret_Mono({
   variable: '--font-azeret-mono',
 })
 
-export default function Home() {
+function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [password, setPassword] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -113,6 +116,17 @@ export default function Home() {
       window.removeEventListener('resize', resizeCanvas);
     };
   }, []);
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === 'popout') {
+      sessionStorage.setItem('isPasswordValid', 'true'); // Store validation state
+      router.push('/2025');
+    } else {
+      alert('Incorrect password');
+    }
+  };
+
   return (
     <>
     <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />
@@ -124,6 +138,18 @@ export default function Home() {
           </p>
         </Marquee>
         <h1 className={`${bayon.className} text-[7.7rem] text-center mx-auto`}>POP OUT CLUB</h1>
+        <form onSubmit={handlePasswordSubmit} className="flex flex-col items-center gap-4">
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+            className="px-4 py-2 border border-gray-300 rounded bg-transparent text-[var(--foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button type="submit" className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Submit
+          </button>
+        </form>
         <div className="overflow-hidden w-full">
           <Marquee gradient={false} speed={30}>
             <p className="inline-block text-sm font-[family-name:var(--font-geist-mono)] marquee-text">
@@ -156,5 +182,11 @@ export default function Home() {
 
     </div>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <Home />
   );
 }
