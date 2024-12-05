@@ -56,7 +56,7 @@ p{
 
 /* scrolling gradient */
 .marquee-text {
-  background: linear-gradient(90deg, #6445ff, #6242d3, #6445ff);
+  background: linear-gradient(90deg, #B882FE, #000000, #B882FE);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
