@@ -1,17 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
-import { Bayon, Azeret_Mono } from 'next/font/google';
+import { Azeret_Mono } from 'next/font/google';
 import Marquee from 'react-fast-marquee'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Link from 'next/link'
-import { Mail, Twitter, Instagram, DiscIcon as Discord, Calendar } from 'lucide-react'
-
-
-const bayon = Bayon({
-  weight: '400',
-  subsets: ['latin'],
-});
 
 const azeretMono = Azeret_Mono({
   subsets: ['latin'],
@@ -41,65 +34,65 @@ function Home() {
     window.addEventListener('resize', resizeCanvas);
 
 
-    function drawEnneagram() {
-      if (!canvas) return;
-      const width = canvas.width;
-      const height = canvas.height;
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const radius = Math.min(width, height) * 0.4; // Adjust radius based on screen size
+    // function drawEnneagram() {
+    //   if (!canvas) return;
+    //   const width = canvas.width;
+    //   const height = canvas.height;
+    //   const centerX = width / 2;
+    //   const centerY = height / 2;
+    //   const radius = Math.min(width, height) * 0.4; // Adjust radius based on screen size
 
-      // Enneagram points based on angles
-      const points: { x: number; y: number }[] = [];
-      const numPoints = 9;
-      const offsetAngle = Math.PI / 2 - 2 * Math.PI / 9; // Rotate the shape to start at the top
+    //   // Enneagram points based on angles
+    //   const points: { x: number; y: number }[] = [];
+    //   const numPoints = 9;
+    //   const offsetAngle = Math.PI / 2 - 2 * Math.PI / 9; // Rotate the shape to start at the top
 
-      //Colors
-      const colors = ['#24116A', '#734DFF', '#FF45C5', '#FAC502', '#000000'];
-      if (!ctx) return;
-      const gradient = ctx.createLinearGradient(0, 0, width, height);
+    //   //Colors
+    //   const colors = ['#24116A', '#734DFF', '#FF45C5', '#FAC502', '#000000'];
+    //   if (!ctx) return;
+    //   const gradient = ctx.createLinearGradient(0, 0, width, height);
 
       
 
-      // Calculate coordinates
-      for (let i = 0; i < numPoints; i++) {
-        const angle = (2 * Math.PI * i) / numPoints - offsetAngle;
-        const x = centerX + radius * Math.cos(angle);
-        const y = centerY + radius * Math.sin(angle);
-        points.push({ x, y });
-      }
+    //   // Calculate coordinates
+    //   for (let i = 0; i < numPoints; i++) {
+    //     const angle = (2 * Math.PI * i) / numPoints - offsetAngle;
+    //     const x = centerX + radius * Math.cos(angle);
+    //     const y = centerY + radius * Math.sin(angle);
+    //     points.push({ x, y });
+    //   }
 
-      // Enneagram connection pattern
-      const triangleConnections = [[2, 5], [5, 8], [8, 2]];
-      const hexagramConnections = [[0, 3], [3, 1], [1, 7], [7, 4], [4, 6], [6, 0]];
+    //   // Enneagram connection pattern
+    //   const triangleConnections = [[2, 5], [5, 8], [8, 2]];
+    //   const hexagramConnections = [[0, 3], [3, 1], [1, 7], [7, 4], [4, 6], [6, 0]];
 
-      //Add color stops with lerp
-      colors.forEach((color, index) => {
-        const stop = index / (colors.length - 1);
-        gradient.addColorStop(stop, color);
-      });
+    //   //Add color stops with lerp
+    //   colors.forEach((color, index) => {
+    //     const stop = index / (colors.length - 1);
+    //     gradient.addColorStop(stop, color);
+    //   });
 
 
-      // Set stroke properties
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = 1;
+    //   // Set stroke properties
+    //   ctx.strokeStyle = gradient;
+    //   ctx.lineWidth = 1;
 
-      // Draw triangle (3-6-9)
-      triangleConnections.forEach(connection => {
-        ctx.beginPath();
-        ctx.moveTo(points[connection[0]].x, points[connection[0]].y);
-        ctx.lineTo(points[connection[1]].x, points[connection[1]].y);
-        ctx.stroke();
-      });
+    //   // Draw triangle (3-6-9)
+    //   triangleConnections.forEach(connection => {
+    //     ctx.beginPath();
+    //     ctx.moveTo(points[connection[0]].x, points[connection[0]].y);
+    //     ctx.lineTo(points[connection[1]].x, points[connection[1]].y);
+    //     ctx.stroke();
+    //   });
 
-      // Draw hexagram
-      hexagramConnections.forEach(connection => {
-        ctx.beginPath();
-        ctx.moveTo(points[connection[0]].x, points[connection[0]].y);
-        ctx.lineTo(points[connection[1]].x, points[connection[1]].y);
-        ctx.stroke();
-      });
-    }
+    //   // Draw hexagram
+    //   hexagramConnections.forEach(connection => {
+    //     ctx.beginPath();
+    //     ctx.moveTo(points[connection[0]].x, points[connection[0]].y);
+    //     ctx.lineTo(points[connection[1]].x, points[connection[1]].y);
+    //     ctx.stroke();
+    //   });
+    // }
 
     //drawEnneagram();
 
