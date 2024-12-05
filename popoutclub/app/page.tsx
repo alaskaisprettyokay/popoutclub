@@ -3,6 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { Bayon, Azeret_Mono } from 'next/font/google';
 import Marquee from 'react-fast-marquee'
 import { useRouter } from 'next/navigation';
+import Image from 'next/image'
+import Link from 'next/link'
+import { Mail, Twitter, Instagram, DiscIcon as Discord, Calendar } from 'lucide-react'
+
 
 const bayon = Bayon({
   weight: '400',
@@ -31,7 +35,7 @@ function Home() {
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      drawEnneagram(); // Redraw when resized
+      //drawEnneagram(); // Redraw when resized
     };
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -97,19 +101,19 @@ function Home() {
       });
     }
 
-    drawEnneagram();
+    //drawEnneagram();
 
-    // Animation function
-    function animate() {
-      if (ctx && canvas) {
+    // // Animation function
+    // function animate() {
+    //   if (ctx && canvas) {
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawEnneagram();
-      }
-      requestAnimationFrame(animate);
-    }
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //     drawEnneagram();
+    //   }
+    //   requestAnimationFrame(animate);
+    // }
 
-    animate();
+    // animate();
 
     // Cleanup function
     return () => {
@@ -129,53 +133,119 @@ function Home() {
 
   return (
     <>
+    {/* Background */}
+    <Image 
+      src="/bg7.jpg" // Put your image in the public folder
+      alt="Background"
+      fill
+      className="fixed top-0 left-0 w-full h-full object-cover -z-20" // -z-20 puts it behind the canvas
+      priority
+    />
     <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] relative z-10">
-      <main className="flex flex-col gap-8 row-start-2 items-center max-w-[70%] mx-auto">
-        <Marquee gradient={false} speed={30} direction="right">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)] relative z-10">
+      <main className="flex flex-col row-start-2 items-center mx-auto">
+
+
+        {/*Left Marquee*/}
+        <div className ="-rotate-90 fixed left-[-90vw]">
+        <Marquee gradient={false} speed={0.3} direction="right">
           <p className="inline-block text-sm font-[family-name:var(--font-geist-mono)] marquee-text">
-            awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • 
+            awesome people doing cool things • popout.club • awesome people doing cool things • popout.club • awesome people doing cool things • popout.club • awesome people doing cool things • popout.club • 
           </p>
         </Marquee>
-        <h1 className={`${bayon.className} text-[7.7rem] text-center mx-auto`}>POP OUT CLUB</h1>
-        <form onSubmit={handlePasswordSubmit} className="flex flex-col items-center gap-4">
+        </div>
+        
+        {/* Right Marquee */}
+        <div className="rotate-90 fixed right-[-90vw]">
+          <Marquee gradient={false} speed={0.3} direction="right">
+            <p className="inline-block text-sm font-[family-name:var(--font-geist-mono)] marquee-text">
+              awesome people doing cool things • popout.club • awesome people doing cool things • popout.club • awesome people doing cool things • popout.club • awesome people doing cool things • popout.club • 
+            </p>
+          </Marquee>
+        </div>
+
+
+          {/* Logo */}
+          <div className="relative w-[30vw] aspect-square">
+            <Image
+              src="/popout-logo.svg"
+              alt="POP OUT Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+
+        {/*Password*/}
+        <form onSubmit={handlePasswordSubmit} className="flex flex-row items-center gap-4">
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
-            className="px-4 py-2 border border-gray-300 rounded bg-transparent text-[var(--foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-2 border border-[#B882FE] bg-transparent text-[var(--foreground)] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button type="submit" className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          <button type="submit" className="px-6 py-3 bg-[#B882FE] text-white hover:background-[#B882FE] text-sm text-[#B882FE]">
             Submit
           </button>
         </form>
-        <div className="overflow-hidden w-full">
-          <Marquee gradient={false} speed={30}>
-            <p className="inline-block text-sm font-[family-name:var(--font-geist-mono)] marquee-text">
-              awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • awesome people doing cool things • 
-            </p>
-          </Marquee>
-        </div>
+        
+        {/* Main Links */}
+        <div className="flex justify-center gap-4 pt-6">
+          <a
+            href="https://gorgeous-receipt-75f.notion.site/Pop-Out-Club-14cafa461e2780ad836ff7c37af2ac32"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${azeretMono.className} text-md text-[#B882FE] px-6 py-3 hover:text-[#F600FF] transition-colors duration-300 hover:underline`}
+          >
+            about
+          </a>
 
-        <div className="flex justify-center gap-4">
           <a
             href="https://agartha1.substack.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${azeretMono.className} text-sm text-[#FF4C96] px-6 py-3 hover:text-[#FAC502] transition-colors duration-300 underline`}
+            className={`${azeretMono.className} text-md text-[#B882FE] px-6 py-3 hover:text-[#F600FF] transition-colors duration-300 hover:underline`}
           >
             subscribe
           </a>
 
           <a
-            href="https://x.com/popoutclub"
+            href="https://discord.com/invite/UAjzAx62Ug"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${azeretMono.className} text-sm text-[#FF4C96] px-6 py-3 hover:text-[#FAC502] transition-colors duration-300 underline`}
+            className={`${azeretMono.className} text-md text-[#B882FE] px-6 py-3 hover:text-[#F600FF] transition-colors duration-300 hover:underline`}
           >
-            follow X
+            join
           </a>
+        </div>
+
+        {/* Social Links */}
+        <div className="flex gap-3 md:gap-4 mt-4 md:mt-8">
+          {[
+            { icon: 'email.svg', href: 'https://agartha1.substack.com/' },
+            { icon: 'discord.svg', href: 'https://discord.com/invite/UAjzAx62Ug' },
+            { icon: 'calendar.svg', href: 'https://lu.ma/popout.club' },
+            { icon: 'x.svg', href: 'https://x.com/popoutclub' },
+            { icon: 'instagram.svg', href: 'https://www.instagram.com/popout.club' },
+          ].map((social, index) => (
+            <Link
+              key={index}
+              href={social.href}
+              className="p-2 md:p-3 rounded-full hover:bg-[#B882FE] transition-colors duration-300"
+            >
+              <Image 
+                src={`/${social.icon}`}
+                alt={social.icon.split('.')[0]}
+                width={40}
+                height={40}
+                className="md:w-8 md:h-8"
+                // style={{ 
+                //   filter: 'invert(67%) sepia(72%) saturate(1496%) hue-rotate(222deg) brightness(101%) contrast(102%)'
+                // }}
+              />
+            </Link>
+          ))}
         </div>
         
       </main>
